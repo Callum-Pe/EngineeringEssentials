@@ -24,13 +24,15 @@
  * another package for this component if you'd like.
  * https://www.npmjs.com/package/react-datepicker
  * https://hacker0x01.github.io/react-datepicker/
+ * 
+ * npm install react-datepicker --save
  */
 
 import React from 'react';
-//import DatePicker from 'react-datepicker'; UNCOMMENT this line if you are using the DatePicker component
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-//import 'react-datepicker/dist/react-datepicker.css'; UNCOMMENT this line if you are using the DatePicker component
 
 class Date extends React.Component {
     constructor (props) {
@@ -38,6 +40,7 @@ class Date extends React.Component {
         this.state = {
             date: moment()
         };
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
@@ -52,6 +55,10 @@ class Date extends React.Component {
          * to propagate the change to App component, which will handle it via its
          * own onChange prop.
          */
+
+         this.props.onChange(this.state.date);
+
+
     }
 
     render() {
@@ -65,6 +72,7 @@ class Date extends React.Component {
                      * This method should set the state to the date argument passed in the parameter.
                      *
                      */
+                    <DatePicker selected={this.state.date} onChange={this.handleChange}/>
                 }
                 <p><strong>{this.props.text}</strong></p>
                 <div className="date-input">
@@ -76,5 +84,7 @@ class Date extends React.Component {
 
 
 }
+
+export default Date;
 
 // Don't forget to export your component!

@@ -17,6 +17,9 @@
 import React from 'react';
 import './style/App.css';
 
+import moment from 'moment';
+import Date from './components/Date.js';
+
 /**
  * TODO:
  * Import your components
@@ -38,10 +41,17 @@ class App extends React.Component{
              * TODO
              * Add state objects for the user inputs and anything else you may need to render the highchart.
              */
+
+            date : moment()
         };
 
+        this.handleChange = this.handleChange.bind(this);
     }
 
+    handleChange(date) {
+        this.setState({date: date});
+
+    }
 
 
 
@@ -52,7 +62,13 @@ class App extends React.Component{
           <Chart />
             <LineChart data={TestData.dailyClosePrice}/>
               <div className="input">
-              {/**
+              {
+                   [<Date onChange={this.handleChange} />,
+                    <Date onChange={this.handleChange} />]
+                  
+                  /**
+
+              
                * TODO
                * Render the StockTicker and Date components. You can use the date component twice
                * for both the start and end dates.

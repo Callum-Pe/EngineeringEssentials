@@ -35,6 +35,8 @@ class LineChart extends React.Component {
             },
 
             xAxis: {
+                // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                //             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 type: 'datetime'
             },
             yAxis: {
@@ -84,7 +86,7 @@ class LineChart extends React.Component {
 
     componentWillReceiveProps(props) { //props.data is the content in the json file for one company
         console.log("New data received to redraw chart.");
-        console.log(props);
+        console.log(props.data);
         
         /**
          * TODO
@@ -94,13 +96,22 @@ class LineChart extends React.Component {
          */
 
         var data = new Array();
-
-        for (var dataPoint in props.data) {
-            console.log(dataPoint);
-            let dataPointValue = props.data[dataPoint];
-            data.push([Date.UTC(dataPoint[2], dataPoint[1], dataPoint[0])], dataPointValue);
-            // data.push(dataPoint, dataPointValue);
+        if (props.data != undefined) {
+            for (var dataPoint in props.data[0]) {
+                let dataPointValue = props.data[0][dataPoint];
+                
+                // console.log(dataPointValue);
+                var splits = dataPoint.split("/");
+                console.log(splits[2]);
+                data.push([Date.UTC(splits[2], splits[1] - 1, splits[0]), dataPointValue]);
+                // data.push([Date.UTC(2018, 9, 2), dataPointValue]);
+                console.log(data);
+            }
         }
+
+        data.sort();
+        console.log(data);
+
 
         /**
          * TODO
@@ -108,7 +119,9 @@ class LineChart extends React.Component {
          * this.chart.series[0].setData(data);
          */
 
-        this.chart.series[0].setData(data);
+        
+            this.chart.series[0].setData(data);
+        
     }
 
     componentWillUnmount() {
