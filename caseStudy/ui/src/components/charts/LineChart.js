@@ -100,10 +100,6 @@ class LineChart extends React.Component {
             data.push([Date.UTC(dataPoint[2], dataPoint[1], dataPoint[0])], dataPointValue);
         }
 
-
-
-
-
         /**
          * TODO
          * Uncomment the line below to pass the data be displayed to the series
