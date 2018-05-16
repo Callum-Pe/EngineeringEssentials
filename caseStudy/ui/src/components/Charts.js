@@ -17,16 +17,34 @@
 import React from 'react';
 import LineChart from './charts/LineChart';
 
+
+
 class Charts extends React.Component {
+    loadDoc(ticker,start,end) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState === 4 && this.status === 200) {
+           console.log(this.responseText);
+           this.chartData = this.responseText;
+          }
+        };
+        xhttp.open("GET", "http://gsee.pythonanywhere.com/hard/"+ticker+"?start="+start+"&end="+end, true);
+        xhttp.send();
+      }
+
     constructor(props) {
         super(props);
+        
+        
         this.state = {
             /**
              * TODO
              * Initialize a state object to store a JavaScript object returned from the helper method.
              * It can be initialized to be empty.
              */
+        chartData: {}
         };
+        this.loadDoc("abc", "date", "date2");
     }
 
 
@@ -34,6 +52,8 @@ class Charts extends React.Component {
         console.log("Calling helper method to fetch data from service.");
         this.dataSourceHelper(nextProps);
     }
+
+    
 
     dataSourceHelper(props) {
         props = props || this.props;
@@ -74,6 +94,8 @@ class Charts extends React.Component {
          *
          *  Don't forget to bind the helper method in the constructor!
          * */
+
+       
 }
     
     render() {
@@ -81,7 +103,9 @@ class Charts extends React.Component {
          * TODO
          * Render your LineChart component and pass the data for the chart to display via props
          */
+        return (<LineChart data={this.chartData} />);
     }
 }
 
 // Don't forget to export your component!
+export default Charts;

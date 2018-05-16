@@ -25,13 +25,13 @@ class LineChart extends React.Component {
     componentDidMount() {
         // TODO
         // Create a highcharts line chart of your choosing (e.g. https://www.highcharts.com/demo/line-time-series for a demo).
-        Highcharts.chart('chart', {
+        this.chart = Highcharts.chart('chart', {
             chart: {
                 zoomType: 'x'
             },
 
             title: {
-                text: 'Stock price over time'
+                text: 'Stock Price for Company over Time'
             },
 
             xAxis: {
@@ -39,7 +39,7 @@ class LineChart extends React.Component {
             },
             yAxis: {
                 title: {
-                    text: 'Stock Prices'
+                    text: 'Prices'
                 }
             },
             legend: {
@@ -79,10 +79,12 @@ class LineChart extends React.Component {
             }]
         });
 
+        this.componentWillReceiveProps(this.props);
     }
 
-    componentWillReceiveProps(props) {
+    componentWillReceiveProps(props) { //props.data is the content in the json file for one company
         console.log("New data received to redraw chart.");
+        console.log(props);
         
         /**
          * TODO
@@ -94,10 +96,10 @@ class LineChart extends React.Component {
         var data = new Array();
 
         for (var dataPoint in props.data) {
-            // var pointArray = new Array();
-            // let dataPointKey = dataPoint;
+            console.log(dataPoint);
             let dataPointValue = props.data[dataPoint];
             data.push([Date.UTC(dataPoint[2], dataPoint[1], dataPoint[0])], dataPointValue);
+            // data.push(dataPoint, dataPointValue);
         }
 
         /**
