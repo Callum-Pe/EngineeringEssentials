@@ -22,6 +22,12 @@ import './style/App.css';
  * Import your components
  */
 
+import LineChart from './components/charts/LineChart.js';
+// import CompanyData from '.../services/src/main/resources/data/companyInfo.json';
+// import StockData from '.../services/src/main/resources/data/historicalStockData.json';
+// import TestData from '.../services/src/main/resources/data/testStockData.json';
+import TestData from 'testStockData.json';
+
 
 class App extends React.Component{
     constructor(props) {
@@ -42,6 +48,7 @@ class App extends React.Component{
     render () {
       return (
           <div className="page-display">
+            <LineChart data={TestData.data}/>
               <div className="input">
               {/**
                * TODO
@@ -67,6 +74,7 @@ class App extends React.Component{
                    *  be maintained as a state object.
                    *  http://reactpatterns.com/#conditional-rendering
                    */}
+                   
 
           </div>
       );
