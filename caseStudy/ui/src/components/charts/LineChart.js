@@ -37,7 +37,10 @@ class LineChart extends React.Component {
             xAxis: {
                 // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 //             'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                type: 'datetime'
+                type: 'datetime',
+                // labels: {
+                //     format: '{value:%Y-%b-%e}'
+                // }
             },
             yAxis: {
                 title: {
@@ -103,7 +106,7 @@ class LineChart extends React.Component {
                 // console.log(dataPointValue);
                 var splits = dataPoint.split("/");
                 console.log(splits[2]);
-                data.push([Date.UTC(splits[2], splits[1] - 1, splits[0]), dataPointValue]);
+                data.push([Date.UTC(splits[2], splits[1] - 1, splits[0]), dataPointValue]); //TODO: fix later
                 // data.push([Date.UTC(2018, 9, 2), dataPointValue]);
                 console.log(data);
             }

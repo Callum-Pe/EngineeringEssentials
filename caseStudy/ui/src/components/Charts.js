@@ -20,15 +20,18 @@ import LineChart from './charts/LineChart';
 
 
 class Charts extends React.Component {
-    loadDoc(ticker,start,end) {
+    loadDoc(ticker,start,end,me) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState === 4 && this.status === 200) {
-          // console.log(this.responseText);
-           this.chartData = this.responseText;
+           
+           me.chartData = this.responseText;
+           console.log(me.chartData);
+           console.log('we here');
+           me.render();
           }
         };
-        xhttp.open("GET", "http://gsee.pythonanywhere.com/hard/"+ticker+"?start="+start+"&end="+end, true);
+        xhttp.open("GET", "http://gsee.pythonanywhere.com/hard/"+ticker+"?start="+start+"&end="+end, false);
         xhttp.send();
       }
 
@@ -44,7 +47,9 @@ class Charts extends React.Component {
              */
         chartData: {}
         };
-        this.loadDoc("abc", "date", "date2");
+        this.loadDoc("abc", "date", "date2", this);
+        console.log(this.chartData);
+        this.render();
     }
 
 
@@ -103,6 +108,8 @@ class Charts extends React.Component {
          * TODO
          * Render your LineChart component and pass the data for the chart to display via props
          */
+        console.log("rendering linechart")
+        console.log(this.chartData)
         return (<LineChart data={this.chartData} />);
     }
 }

@@ -47,7 +47,7 @@
  */
 
 import React from 'react';
-//import {Typeahead} from 'react-bootstrap-typeahead'; UNCOMMENT this line if you are using the react-bootstrap-typeeahead component
+import {Typeahead} from 'react-bootstrap-typeahead';// UNCOMMENT this line if you are using the react-bootstrap-typeeahead component
 
 /* If you chose to use react-boostrap-typeahead, look at AsyncTypeahead for a component that 
  * provides auto-complete suggestions as you type. This would require adding a search handler 
@@ -71,10 +71,25 @@ class StockTicker extends React.Component {
      * If you are having difficulty with this, you may hard code the options array from the company data provided for the
      * services.
      */
+    //var opts = ["first","second","third"];
+    loadDoc(me) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            console.log("here5");
+           console.log(this.responseText);
+           const g = JSON.parse(this.response);
+            me.setState({company:g});
+        }
+        };
+        xhttp.open("GET", "http://gsee.pythonanywhere.com/AKAM", true);
+        xhttp.send();
+      }
     constructor(props) {
         super(props);
+        
         this.state = {
-            showcompanyinfo: false, //TODO: Use this boolean to determine if the company information should be rendered
+            showcompanyinfo: true, //TODO: Use this boolean to determine if the company information should be rendered
             company : {
                 symbol: '',
                 name: '',
@@ -82,15 +97,17 @@ class StockTicker extends React.Component {
                 state: '',
                 sector: '',
                 industry: ''
-            }
+            },
+            //opts = ["first","second","third"];
             /**
              * TODO
              * Add any additional state to pass via props to the typeahead component.
              */
         };
+        //this.props = props;
         this.handleChange = this.handleChange.bind(this);
     }
-
+    
     handleChange(event) {
         if (event.length > 0) {
             /**
@@ -103,12 +120,15 @@ class StockTicker extends React.Component {
              * to handle errors). If you successfully retrieve this information, you can set the state objects
              * and render it.
              */
+           // const c = {symbol:event[0],name :'b',city:"c",state:"d",sector: "e",industry:"i"};
+            //this.setState({company : c});
+            this.loadDoc(this);
             this.setState({showinfo: true});
-
+            //this.render();
             //this.props.onChange(..);  Call this.props.onChange with the selected symbol to propagate it
             // to the App component, which will handle it via its own onChane prop,
             // ultimately  used to fetch the data for the LineChart component.
-
+           //this.props.onChange(event[0].symbol); 
         }
         else {
             this.setState({showinfo: false});
@@ -126,23 +146,27 @@ class StockTicker extends React.Component {
          * On change should fetch the company information and display Company, Ticker Symbol, City, State/Country, Sector, and Industry information.
          * https://github.com/ericgio/react-bootstrap-typeahead/blob/master/docs/Props.md
          */
-
+console.log("here300");
+         console.log(this);
+        var t = this.state.company.symbol;
+        //t = "ASdas";
+        console.log(t);
         return (
             <div className="stockticker">
                 <div className="ticker-input">
                     <p><strong>Stock Ticker</strong></p>
                     <div className="stockticker-typeahead">
-                        {/* useful props if you decide to use react-bootstrap-typeahead
+                        {/* useful props if you decide to use react-bootstrap-typeahead*/
                         <Typeahead
-                             align=
-                             filterBy=
-                             labelKey=
+                             /*align=
+                             filterBy= true
+                             labelKey=*/
                              onChange={this.handleChange}
-                             minLength=
+                             //minLength=
                              placeholder="Company Name/Ticker"
-                             options=
+                             options={["first","second","third"]}
                         />
-                        */}
+                        }
                     </div>
                 </div>
                 {
@@ -154,10 +178,16 @@ class StockTicker extends React.Component {
                      *  http://reactpatterns.com/#conditional-rendering
                      */
                 }
+                <div>
+                    </div>
+                    <p>{this.state.company.symbol}</p>
+                    <p>{this.state.company.city}</p>
+                    <p>{this.state.company.name}</p>
+
             </div>
         );
     }
 
 }
 
-//Don't forget to export your component!
+export default StockTicker;

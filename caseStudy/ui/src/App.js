@@ -31,6 +31,7 @@ import Chart from './components/Charts.js';
 // import StockData from '.../services/src/main/resources/data/historicalStockData.json';
 // import TestData from '.../services/src/main/resources/data/testStockData.json';
 import TestData from './testStockData.json';
+import StockTicker from './components/StockTicker.js';
 
 
 class App extends React.Component{
@@ -42,7 +43,7 @@ class App extends React.Component{
              * Add state objects for the user inputs and anything else you may need to render the highchart.
              */
 
-            date : moment()
+            date: moment()
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -59,7 +60,8 @@ class App extends React.Component{
     render () {
       return (
           <div className="page-display">
-          <Chart />
+          {/* <Chart /> */}
+            <StockTicker/>
             <LineChart data={TestData.dailyClosePrice}/>
               <div className="input">
               {
