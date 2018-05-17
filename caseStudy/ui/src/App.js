@@ -32,6 +32,7 @@ import Chart from './components/Charts.js';
 // import TestData from '.../services/src/main/resources/data/testStockData.json';
 import TestData from './testStockData.json';
 import StockTicker from './components/StockTicker.js';
+import Banner from './components/TitlePage.js';
 
 
 class App extends React.Component{
@@ -60,6 +61,10 @@ class App extends React.Component{
     render () {
       return (
           <div className="page-display">
+          <Banner/>
+          <div>
+            <h1 text-align="center" width="50%">Goldman Sachs Engineering Essentials 2018</h1>
+          </div>
           {/* <Chart /> */}
             <StockTicker/>
             <LineChart data={TestData.dailyClosePrice}/>
